@@ -1,0 +1,40 @@
+---
+
+- name: Setting Internal Interface
+  when: ansible_distribution == 'Ubuntu'
+  template: src=internal.j2 dest=/etc/network/interfaces.d/internal.cfg
+
+- name: Setting External Interface
+  when: ansible_distribution == 'Ubuntu'
+  template: src=external.j2 dest=/etc/network/interfaces.d/external.cfg
+
+- name: Install UFW
+  when: ansible_distribution == 'Ubuntu'
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - ufw
+
+- lineinfile:
+    path: /etc/default/ufw
+    regexp: '^DEFAULT_FORWARD_POLICY='
+    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+
+- lineinfile:
+    path: /etc/ufw/sysctl.conf
+    regexp: '^.?net.ipv4.ip_forward='
+    line: 'net.ipv4.ip_forward=1'
+
+- lineinfile:
+    path: /etc/ufw/sysctl.conf
+    regexp: '^.?net/ipv6/conf/default/forwarding='
+    line: 'net/ipv6/conf/default/forwarding=1'
+
+- lineinfile:
+    path: /etc/ufw/sysctl.conf
+    regexp: '^.?net/ipv6/conf/all/forwarding'
+    line: 'net/ipv6/conf/all/forwarding=1'
+
+- ufw:
+    state: enabled
+    policy: allow
+

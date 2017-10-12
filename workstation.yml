@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  roles:
+  - aptcache-client
+  - apt
+  - development
+

@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  roles:
+  - network
+  - aptcache-client
+  - aptcache
+  - apt
+

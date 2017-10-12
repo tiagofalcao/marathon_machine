@@ -1,0 +1,13 @@
+---
+
+- name: Install apt-cacher-ng
+  when: ansible_distribution == 'Ubuntu'
+  action: apt pkg={{item}} state=installed
+  notify: Restart APT Cache
+  with_items:
+  - squid-deb-proxy
+
+- name: Setting APT Cache server
+  when: ansible_distribution == 'Ubuntu'
+  template: src=20-domains.j2 dest=/etc/squid-deb-proxy/mirror-dstdomain.acl.d/20-domains
+  notify: Restart APT Cache

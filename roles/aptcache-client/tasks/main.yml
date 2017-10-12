@@ -1,0 +1,7 @@
+---
+
+- name: Setting APT Cache
+  when: ansible_distribution == 'Ubuntu'
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - squid-deb-proxy-client
