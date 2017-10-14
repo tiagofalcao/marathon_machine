@@ -1,12 +1,19 @@
 ---
 
+- name: Setting Network Interfaces
+  when: ansible_distribution == 'Ubuntu'
+  template: src=interfaces.j2 dest=/etc/network/interfaces
+  notify: Restart Network
+
 - name: Setting Internal Interface
   when: ansible_distribution == 'Ubuntu'
   template: src=internal.j2 dest=/etc/network/interfaces.d/internal.cfg
+  notify: Restart Network
 
 - name: Setting External Interface
   when: ansible_distribution == 'Ubuntu'
   template: src=external.j2 dest=/etc/network/interfaces.d/external.cfg
+  notify: Restart Network
 
 - name: Install UFW
   when: ansible_distribution == 'Ubuntu'
