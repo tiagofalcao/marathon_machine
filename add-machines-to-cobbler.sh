@@ -10,7 +10,7 @@ MACS="
 78:E7:D1:55:7C:CC
 78:E7:D1:55:4E:83
 78:E7:D1:55:FD:AF
-78:E7:D1:55:43:92
+78:E7:D1:55:4E:92
 78:E7:D1:55:0E:9C
 78:E7:D1:55:9E:E6
 78:E7:D1:55:4E:53
@@ -24,10 +24,11 @@ D8:D3:85:6C:C6:F7
 count=0
 for mac in $MACS; do
   name=marathon${count}
-  echo "$name"
-  cobbler system add --name=${name}           \
-                   --profile=${profile}       \
-                   --interface=${ifacename}   \
-                   --mac=${mac}
+  echo "$name 10.10.0.$((count+2))"
+  cobbler system add  --name=${name}             \
+                      --profile=${profile}       \
+                      --interface=${ifacename}   \
+                      --mac=${mac}               \
+                      --ip-address=10.10.0.$((count+2))            
   count=$((count+1))
 done
