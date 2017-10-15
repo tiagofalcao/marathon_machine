@@ -3,17 +3,3 @@
   apt: pkg={{item}} state=installed
   with_items:
     build-essential
-
-#- name: Install Build Manager Packages
-#  action: apt pkg={{item}} state=installed
-#  with_items:
-#  - scons
-#  - cmake
-#  - cmake-curses-gui
-#  - ninja-build
-#  - ninja-build-doc
-#  - autoconf
-#  - automake*
-#  - autotools-dev
-#  - ant
-#  - ant-optional
