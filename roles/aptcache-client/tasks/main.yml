@@ -5,3 +5,4 @@
   action: apt pkg={{item}} state=installed
   with_items:
   - squid-deb-proxy-client
+  - avahi-utils

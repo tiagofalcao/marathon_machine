@@ -26,3 +26,10 @@ COMMIT
 -A POSTROUTING -s 10.10.0.0/16 -o {{interface_ext}} -j MASQUERADE
 COMMIT
 
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -i {{interface_int}} -d 224.0.0.0/4 -j ACCEPT
+-A INPUT -i {{interface_int}} -p tcp -m tcp --dport 8000 -d 10.10.0.1 -s 10.10.0.0/16 --syn -j ACCEPT
+COMMIT

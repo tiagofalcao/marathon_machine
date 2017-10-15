@@ -6,6 +6,7 @@
   notify: Restart APT Cache
   with_items:
   - squid-deb-proxy
+  - avahi-utils
 
 - name: Setting APT Cache server
   when: ansible_distribution == 'Ubuntu'
