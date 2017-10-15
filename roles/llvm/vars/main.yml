@@ -1,0 +1,34 @@
+---
+llvm_stable: '4.0'
+
+llvm_stable_list:
+ - clang-4.0
+ - clang-4.0-doc
+ - clang-4.0-examples
+ - clang-format-4.0
+ - clang-tidy-4.0
+ - libclang-4.0-dev
+ - libclang-common-4.0-dev
+ - libclang1-4.0
+ - libclang1-4.0-dbg
+ - libfuzzer-4.0-dev
+ - liblld-4.0
+ - liblld-4.0-dbg
+ - liblld-4.0-dev
+ - liblldb-4.0
+ - liblldb-4.0-dbg
+ - liblldb-4.0-dev
+ - libllvm-4.0-ocaml-dev
+ - libllvm4.0
+ - libllvm4.0-dbg
+ - lld-4.0
+ - lldb-4.0
+ - llvm-4.0
+ - llvm-4.0-dev
+ - llvm-4.0-doc
+ - llvm-4.0-examples
+ - llvm-4.0-runtime
+ - llvm-4.0-tools
+ - python-clang-4.0
+ - python-lldb-4.0
+
