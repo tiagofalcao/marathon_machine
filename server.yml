@@ -6,4 +6,5 @@
   - aptcache-client
   - aptcache
   - apt
-
+  - build_base
+  - cobbler

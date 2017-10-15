@@ -1,3 +1,21 @@
 ---
-- name: Restart APT Cache
-  service: name=squid-deb-proxy state=restarted
+- name: Restart bind9
+  service: name={{ item }} state=restarted
+  with_items:
+    - bind9
+
+- name: Reload Daemon
+  command: systemctl daemon-reload
+
+- name: Restart Cobbler Daemon
+  service: name={{ item }} state=restarted
+  with_items:
+    - cobblerd
+  notify: Reload Daemon
+
+- name: Restart Apache2 and Cobbler Daemons
+  service: name={{ item }} state=restarted
+  with_items:
+    - apache2
+    - cobblerd
+  notify: Reload Daemon

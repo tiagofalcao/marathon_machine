@@ -1,0 +1,7 @@
+# MAXIWELL: Install Deployment public key for root user
+cd /root
+mkdir --mode=700 .ssh
+cat<<EOF>.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6tAlyDHtblMxadvEwTxG3LS02OgIggZm7Fd+QXp9Vww4qut1OXUtsmhrwc4+OLC5GeF8FzrZqytiqxAS0Pp1sWdOxR9S8z+USiQL6SszkrqZ5hx4i78EhF3ociJw78tUMrbEIPuLw8DSid70wb3lZkqr7LyihIocnVMoKy8RoWT7s5Kd9jHxiQOgNYs4FZnySuC+eSpJKuyYRpdy+2eiK2Vs1HW0/EK9QJfZ62Nq8icUunTXiG1p/mNZtr50wFg77oC4FHjs896MVnERyTf5dYm3hLi6p9vQCXzq17BefJ7a1lH37s6wCeVLxakP9bgnC0WUjI7gQW7PlvAHeJD+1 root@marathon
+EOF
+chmod 600 .ssh/authorized_keys

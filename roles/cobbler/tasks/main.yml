@@ -1,7 +1,97 @@
 ---
 
-- name: Install Cobbler
+- name: Clone Cobbler Git repo
+  git:
+    repo: https://github.com/cobbler/cobbler.git
+    dest: "{{ COBBLER_SRC_DIR }}"
+    version: v2.8.2
+
+- name: Compile and Install Cobbler
+  make:
+    chdir: "{{ COBBLER_SRC_DIR }}"
+    target: install
+
+- name: Install Cobbler Dependencies
   when: ansible_distribution == 'Ubuntu'
   action: apt pkg={{item}} state=installed
   with_items:
-  - squid-deb-proxy
+    - createrepo
+    - genisoimage
+    - libapache2-mod-wsgi
+    - python-cheetah
+    - python-netaddr
+    - python-simplejson
+    - python-urlgrabber
+    - python-yaml
+    - rsync
+    - syslinux
+    - debmirror
+    - pxelinux
+    - bind9
+    - atftpd
+    - xinetd
+    - openssl
+    - isc-dhcp-server
+  notify: Restart bind9
+
+- name: Setup Cobbler /etc/cobbler/settings
+  lineinfile:
+    dest: /etc/cobbler/settings
+    state: present
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^manage_dhcp:', line: 'manage_dhcp: 1' }
+    - { regexp: '^manage_dns:', line: 'manage_dns: 1' }
+    - { regexp: '^server:', line: 'server: 10.10.0.1' }
+    - { regexp: '^next_server:', line: 'next_server: 10.10.0.1' }
+    - { regexp: '^default_password_crypted:', line: 'default_password_crypted: "$1$EsWE9vxE$Yb4TwmU5GEHcwJnssYw3z0"' }
+  notify: Restart Cobbler Daemon
+
+- name: Setup Cobbler /etc/cobbler/users.digest
+  template: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: "users.digest.j2", dest: "/etc/cobbler/users.digest" }
+    - { src: "pubkey_root.j2", dest: "/var/lib/cobbler/snippets/pubkey_root" }
+    - { src: "preseed_late_default_public_ssh_key.j2", dest: "/var/lib/cobbler/scripts/preseed_late_default_public_ssh_key" }
+    - { src: "marathon.seed.j2", dest: "/var/lib/cobbler/kickstarts/marathon.seed" }
+  notify: Restart Apache2 and Cobbler Daemons
+
+- name: Setup Cobbler /usr/local/share/cobbler/web/settings.py
+  lineinfile:
+    dest: /usr/local/share/cobbler/web/settings.py
+    state: present
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^SECRET_KEY', line: 'SECRET_KEY = "b\=f\+mq6q7wk2g325\-ojzp\(hhkfa\&6rt3qkgssvxr\=4hw6gt\^q\)2\=\_s45dm\&phfmyv4\(vc\+2rw\^c\*\+d3wqe\-ei3l2\*4ljobyjwc6j"' }
+  notify: Restart Apache2 and Cobbler Daemons
+
+- name: Setup Cobbler /etc/cobbler/dhcp.template
+  lineinfile:
+    dest: /etc/cobbler/dhcp.template
+    state: present
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^subnet', line: 'subnet 10.10.0.0 netmask 255.255.0.0 {' }
+    - { regexp: '^     option routers', line: '     option routers             10.10.0.1;' }
+    - { regexp: '^     option domain-name-servers', line: '     option domain-name-servers        8.8.8.8, 8.8.4.4;' }
+    - { regexp: '^     option subnet-mask', line: '     option subnet-mask         255.255.0.0;' }
+    - { regexp: '^     range dynamic-bootp', line: '     range dynamic-bootp        10.10.0.2 10.10.255.254;' }
+  notify: Restart Apache2 and Cobbler Daemons
+
+- name: Disable Python Module in Apache2
+  command: a2dismod "{{ item }}"
+  with_items:
+    - python
+
+- name: Enable Cobbler in Apache2
+  file:
+    src: /etc/cobbler/{{ item }}
+    dest: /etc/apache2/conf-enabled/{{ item }}
+    state: link
+  with_items:
+    - cobbler.conf
+    - cobbler_web.conf
+  notify: Restart Apache2 and Cobbler Daemons
