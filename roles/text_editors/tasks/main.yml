@@ -1,0 +1,10 @@
+---
+
+- name: Install Editors Packages
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - emacs
+  - vim
+  - nano
+  - cscope
+  - exuberant-ctags
