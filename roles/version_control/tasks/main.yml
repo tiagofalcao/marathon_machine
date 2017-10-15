@@ -1,0 +1,10 @@
+---
+- name: Install Version Control Packages
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - git
+  - git-svn
+  - subversion
+  - mercurial
+  - hg-fast-export
+  - svn-all-fast-export
