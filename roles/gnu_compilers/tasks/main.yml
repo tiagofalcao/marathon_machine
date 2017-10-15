@@ -1,0 +1,8 @@
+---
+
+- name: Install GNU Compilers (gcc/g++/gfortran)
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - gcc-5
+  - g++-5
+  - gfortran-5

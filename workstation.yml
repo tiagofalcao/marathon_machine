@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: workstations
   roles:
   - aptcache-client
   - apt

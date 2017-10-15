@@ -1,0 +1,36 @@
+---
+- name: Check LLVM repository key 
+  when: ansible_architecture == 'x86_64' or ansible_architecture == 'x86'
+  command: apt-key list
+  register: llvmkey
+  changed_when: "'4096R/AF4F7421' not in llvmkey.stdout"
+
+- name: LLVM repository key (x86*)
+  when: llvmkey|changed
+  apt_key: url=http://apt.llvm.org/llvm-snapshot.gpg.key state=present
+
+#- name: LLVM Development repository (x86*)
+#  when: ansible_architecture == 'x86_64' or ansible_architecture == 'x86'
+#  apt_repository: repo='deb http://apt.llvm.org/{{ ansible_lsb.codename }}/ llvm-toolchain-{{ ansible_lsb.codename }} main' state=present update_cache=yes
+
+#- name: Install LLVM Development Packages (x86*)
+#  when: ansible_architecture == 'x86_64' or ansible_architecture == 'x86'
+#  action: apt pkg={{ llvm_development_list }} state=installed
+#  ignore_errors: yes 
+
+#- name: LLVM {{ llvm_qualification }} repository (x86*)
+#  when: ansible_architecture == 'x86_64' or ansible_architecture == 'x86'
+#  apt_repository: repo='deb http://apt.llvm.org/{{ ansible_lsb.codename }}/ llvm-toolchain-{{ ansible_lsb.codename }}-{{ llvm_qualification }} main' state=present update_cache=yes
+#
+#- name: Install LLVM {{ llvm_qualification }} Packages (x86*)
+#  when: ansible_architecture == 'x86_64' or ansible_architecture == 'x86'
+#  action: apt pkg={{ llvm_qualification_list }} state=installed
+#  ignore_errors: yes 
+
+- name: LLVM {{ llvm_stable }} repository (x86*)
+  when: ansible_architecture == 'x86_64' or ansible_architecture == 'x86'
+  apt_repository: repo='deb http://apt.llvm.org/{{ ansible_lsb.codename }}/ llvm-toolchain-{{ ansible_lsb.codename }}-{{ llvm_stable }} main' state=present update_cache=yes
+
+- name: Install LLVM {{ llvm_stable }} Packages
+  action: apt pkg={{ llvm_stable_list }} state=installed
+  ignore_errors: yes

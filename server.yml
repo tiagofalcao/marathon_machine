@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: server
   roles:
   - network
   - aptcache-client

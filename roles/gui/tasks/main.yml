@@ -1,0 +1,7 @@
+---
+
+- name: Install Editors Packages
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - xubuntu-desktop
+  - gedit
