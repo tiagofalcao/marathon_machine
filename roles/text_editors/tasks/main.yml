@@ -1,6 +1,6 @@
 ---
 
-- name: Install Editors Packages
+- name: Install Text Editors Packages
   action: apt pkg={{item}} state=installed
   with_items:
   - emacs
@@ -8,3 +8,12 @@
   - nano
   - cscope
   - exuberant-ctags
+
+- name: Install Text Graphical Editors Packages
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - vim-gtk
+  - vim-gtk3
+  - vim-gnome
+  - gedit
+
