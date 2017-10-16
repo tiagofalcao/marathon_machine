@@ -45,7 +45,8 @@
     - { regexp: '^manage_dns:', line: 'manage_dns: 1' }
     - { regexp: '^server:', line: 'server: 10.10.0.1' }
     - { regexp: '^next_server:', line: 'next_server: 10.10.0.1' }
-    - { regexp: '^default_password_crypted:', line: 'default_password_crypted: "$1$EsWE9vxE$Yb4TwmU5GEHcwJnssYw3z0"' }
+    - { regexp: '^default_password_crypted:', line: 'default_password_crypted: "$5$B7uv5P0Y$/RxzNCkHzvqk51tSW2pTxxsScwyLWjdHbCQQSmeCsm5"' }
+    - { regexp: '^pxe_just_once:', line: 'pxe_just_once: 1' }
   notify: Restart Cobbler Daemon
 
 - name: Setup Cobbler /etc/cobbler/users.digest
