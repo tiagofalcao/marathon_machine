@@ -4,8 +4,15 @@
   when: ansible_distribution == 'Ubuntu'
   template: src=sources.list.j2 dest=/etc/apt/sources.list
 
-- name: apt-get update & upgrade
+- name: apt-get update
   when: ansible_distribution == 'Ubuntu'
-  apt: upgrade=dist update_cache=yes cache_valid_time=3600 autoremove=yes
+  apt:  update_cache=yes cache_valid_time=3600
+  ignore_errors: yes
+
+- name: apt-get upgrade
+  when: ansible_distribution == 'Ubuntu'
+  apt: upgrade=dist cache_valid_time=3600 autoremove=yes
   ignore_errors: yes 
 
+- name: apt-get clean
+  apt: autoclean=yes
