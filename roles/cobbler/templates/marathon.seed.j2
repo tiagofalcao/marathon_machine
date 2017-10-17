@@ -34,9 +34,9 @@ d-i clock-setup/ntp-server string ntp.unicamp.br
 
 # Setup the installation source
 d-i mirror/country string manual
-d-i mirror/http/hostname string $http_server
-d-i mirror/http/directory string $install_source_directory
-d-i mirror/http/proxy string
+d-i mirror/http/hostname string archive.ubuntu.com
+d-i mirror/http/directory string /ubuntu
+d-i mirror/http/proxy string http://10.20.0.1:8000
 
 #set $os_v = $getVar('os_version','')
 #if $breed == "ubuntu" and $os_v and ($os_v.lower()[0] > 'p' or $os_v.lower()[0] < 'd')
