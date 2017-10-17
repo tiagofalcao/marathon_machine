@@ -84,7 +84,7 @@ d-i passwd/username string marathon
 d-i passwd/user-password-crypted password $5$B7uv5P0Y$/RxzNCkHzvqk51tSW2pTxxsScwyLWjdHbCQQSmeCsm5
 d-i user-setup/allow-password-weak  boolean false
 d-i user-setup/encrypt-home boolean false
-d-i passwd/user-default-groups string adm cdrom dialout lpadmin plugdev sambashare
+d-i passwd/user-default-groups string marathon adm cdrom sudo dip plugdev lpadmin sambashare
 
 # You can choose to install restricted and universe software, or to install
 # software from the backports repository.
