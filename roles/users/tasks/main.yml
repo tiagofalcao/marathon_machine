@@ -1,0 +1,16 @@
+---
+
+- user:
+    name: marathon
+    comment: "Marathon"
+    shell: /bin/bash
+    password: "$5$B7uv5P0Y$/RxzNCkHzvqk51tSW2pTxxsScwyLWjdHbCQQSmeCsm5"
+    groups: admins,developers
+    append: yes
+
+- user:
+    name: team
+    comment: "Team"
+    shell: /bin/bash
+    password: "$6$mBjoNKUI.tTSl0Z$epgTiYrKn.Tl9PAwWtF8yUqH5.xE4du1ufBWNKZ/QB9wsZB24YH69ByBWQjRwJXesdmyyaG3tSPZ4MT7j/zZZ."
+    update_password: on_create

@@ -43,8 +43,8 @@
   with_items:
     - { regexp: '^manage_dhcp:', line: 'manage_dhcp: 1' }
     - { regexp: '^manage_dns:', line: 'manage_dns: 1' }
-    - { regexp: '^server:', line: 'server: 10.10.0.1' }
-    - { regexp: '^next_server:', line: 'next_server: 10.10.0.1' }
+    - { regexp: '^server:', line: 'server: 10.20.0.1' }
+    - { regexp: '^next_server:', line: 'next_server: 10.20.0.1' }
     - { regexp: '^default_password_crypted:', line: 'default_password_crypted: "$5$B7uv5P0Y$/RxzNCkHzvqk51tSW2pTxxsScwyLWjdHbCQQSmeCsm5"' }
     - { regexp: '^pxe_just_once:', line: 'pxe_just_once: 1' }
   notify: Restart Cobbler Daemon
@@ -75,11 +75,11 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:
-    - { regexp: '^subnet', line: 'subnet 10.10.0.0 netmask 255.255.0.0 {' }
-    - { regexp: '^     option routers', line: '     option routers             10.10.0.1;' }
+    - { regexp: '^subnet', line: 'subnet 10.20.0.0 netmask 255.255.0.0 {' }
+    - { regexp: '^     option routers', line: '     option routers             10.20.0.1;' }
     - { regexp: '^     option domain-name-servers', line: '     option domain-name-servers        8.8.8.8, 8.8.4.4;' }
     - { regexp: '^     option subnet-mask', line: '     option subnet-mask         255.255.0.0;' }
-    - { regexp: '^     range dynamic-bootp', line: '     range dynamic-bootp        10.10.0.2 10.10.255.254;' }
+    - { regexp: '^     range dynamic-bootp', line: '     range dynamic-bootp        10.20.0.2 10.20.255.254;' }
   notify: Restart Apache2 and Cobbler Daemons
 
 - name: Disable Python Module in Apache2

@@ -1,8 +1,13 @@
 ---
 
-- hosts: workstations
+- hosts: all
   roles:
-  - aptcache-client
   - apt
-  - development
-
+  - aptcache-client
+  - build_base
+  - build_extra
+  - gnu_compilers
+  - llvm
+  - gui
+  - text_editors
+  - version_control

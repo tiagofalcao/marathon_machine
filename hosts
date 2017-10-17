@@ -1,7 +1,3 @@
-[server]
-localhost
-
-[workstations]
 marathon0
 marathon1
 marathon2

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ifacename="enp16s0"
+prefix=10.20.0
 
 profile="ubuntu-16.04.3-server-x86_64"
 
@@ -24,11 +25,11 @@ D8:D3:85:6C:C6:F7
 count=0
 for mac in $MACS; do
   name=marathon${count}
-  echo "$name 10.10.0.$((count+2))"
+  echo "$name $prefix.$((count+2))"
   cobbler system add  --name=${name}             \
                       --profile=${profile}       \
                       --interface=${ifacename}   \
                       --mac=${mac}               \
-                      --ip-address=10.10.0.$((count+2))            
+                      --ip-address=$prefix.$((count+2))            
   count=$((count+1))
 done
