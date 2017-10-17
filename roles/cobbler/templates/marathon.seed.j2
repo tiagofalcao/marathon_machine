@@ -88,8 +88,8 @@ d-i passwd/user-default-groups string marathon adm cdrom sudo dip plugdev lpadmi
 
 # You can choose to install restricted and universe software, or to install
 # software from the backports repository.
-# d-i apt-setup/restricted boolean true
-# d-i apt-setup/universe boolean true
+d-i apt-setup/restricted boolean true
+d-i apt-setup/universe boolean true
 # d-i apt-setup/backports boolean true
 
 # Uncomment this if you don't want to use a network mirror.
@@ -127,8 +127,7 @@ tasksel tasksel/first multiselect standard
 # Individual additional packages to install
 # wget is REQUIRED otherwise quite a few things won't work
 # later in the build (like late-command scripts)
-#d-i pkgsel/include string squid-deb-proxy-client avahi-utils ntp wget curl openssh-server software-properties-common python-software-properties
-d-i pkgsel/include string ntp wget ssh python
+d-i pkgsel/include string squid-deb-proxy-client avahi-utils ntp wget curl openssh-server software-properties-common python-software-properties
 
 # Debian needs this for the installer to avoid any question for grub
 # Please verify that it suit your needs as it may overwrite any usb stick
