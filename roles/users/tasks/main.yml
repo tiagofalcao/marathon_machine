@@ -8,6 +8,10 @@
     groups: marathon,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare
     append: yes
 
+- group:
+    name: team
+    state: present
+
 - user:
     name: team
     comment: "Team"
