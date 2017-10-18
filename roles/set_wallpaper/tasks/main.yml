@@ -1,0 +1,18 @@
+---
+- name: Make XFCE4 directories
+  register: created_dirs
+  file: path={{ item.dir }}
+  state: directory
+  owner: "{{ item.owner }}"
+  with_items:
+    - { dir: "/home/team/.config/xfce4/xfconf/xfce-perchannel-xml", owner: "team" }
+
+- name: Set Wallpaper
+  when: created_dirs|changed
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+  with_items:
+    - { src: "/home/marathon/wallpaper.png", dest: "/home/team/.config/xfce4/wallpaper.png", owner: "team" }
+    - { src: "/home/marathon/xfce4-desktop.xml", dest: "/home/team/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml", owner: "team"}
